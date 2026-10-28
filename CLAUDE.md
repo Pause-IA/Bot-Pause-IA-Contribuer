@@ -162,6 +162,12 @@ Comparer deux `ReactionType` avec `==` échouerait par intermittence.
   indestructible : la purge l'ignore.
 - **Un salon forum n'accepte pas de message.** Seuls ses fils en reçoivent, d'où
   le filtre de `commands::is_writable`.
+- **Désarchiver un fil exige `Manage Threads`.** Discord archive un fil de forum
+  après trois jours sans message (une réaction ne compte pas), et un fil archivé
+  n'accepte plus de réaction. `events::threads` le rouvre, mais le bot n'étant
+  pas l'auteur des fils, l'API refuse (`Missing Access`) sans cette permission :
+  le forum cesse alors de répondre, sauf le fil où l'on discute encore. Elle fait
+  partie des permissions d'invitation (voir `docs/guide.md`).
 - **Fenêtre de trois secondes.** Toute commande commence par `commands::begin`,
   qui diffère la réponse en éphémère.
 - **Le contrôle d'accès tourne aussi pendant l'autocomplétion.** poise appelle

@@ -7,7 +7,7 @@
 1. Sur [discord.com/developers/applications](https://discord.com/developers/applications) : **New Application**.
 2. Onglet **Bot** → **Reset Token**. Copiez le jeton : il n'est affiché qu'une fois.
 3. Onglet **Bot** → *Privileged Gateway Intents* : activez **Server Members Intent**, puis enregistrez. Sans lui, le bot ne démarre pas.
-4. Onglet **OAuth2 → URL Generator** : cochez les scopes `bot` et `applications.commands`, puis exactement ces 8 permissions :
+4. Onglet **OAuth2 → URL Generator** : cochez les scopes `bot` et `applications.commands`, puis exactement ces 9 permissions :
 
 | Permission | Sert à |
 |---|---|
@@ -18,7 +18,10 @@
 | Add Reactions | poser la 🙋 sous chaque carte |
 | Read Message History | réagir et relire un fil |
 | Manage Messages | vider un fil lors de `/forum republier` |
+| Manage Threads | désarchiver les fils du forum qu'il n'a pas créés |
 | Manage Roles | créer, donner et reprendre les rôles |
+
+> **Manage Threads est indispensable.** Discord archive un fil de forum après trois jours sans message (une réaction ne compte pas), et dans un fil archivé plus personne ne peut réagir. Le bot désarchive ses fils, mais sans cette permission l'API refuse (`Missing Access`) et le forum cesse de répondre, sauf le fil où l'on discute encore.
 
 5. Ouvrez l'URL générée et invitez le bot sur votre serveur.
 6. *Paramètres du serveur → Rôles* : glissez le rôle du bot **tout en haut**, même s'il semble déjà bien placé : à rang égal, Discord le classe sous les rôles plus anciens. Sinon, les attributions échouent.
@@ -26,7 +29,7 @@
 Raccourci pour les étapes 4 et 5, en remplaçant l'identifiant par celui de votre application :
 
 ```
-https://discord.com/oauth2/authorize?client_id=VOTRE_ID&scope=bot+applications.commands&permissions=275146435648
+https://discord.com/oauth2/authorize?client_id=VOTRE_ID&scope=bot+applications.commands&permissions=292326304832
 ```
 
 ## 2. Valeurs à transmettre pour le `.env`

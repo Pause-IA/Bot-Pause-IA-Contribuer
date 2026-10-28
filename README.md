@@ -49,7 +49,7 @@ Dans le [portail développeur](https://discord.com/developers/applications), sur
 votre application :
 
 - onglet **Bot** : activer l'intent privilégié **SERVER MEMBERS INTENT**. Le bot n'écoute pas les arrivées ni les départs, mais sans cet intent il ne voit pas les changements de rôles des membres, et déciderait du rôle parent sur des rôles périmés ;
-- onglet **OAuth2** : inviter le bot avec les scopes `bot` et `applications.commands`, et exactement les 8 permissions listées dans [docs/guide.md](docs/guide.md) (entier `275146435648`), vérifiées une par une sur un serveur de test.
+- onglet **OAuth2** : inviter le bot avec les scopes `bot` et `applications.commands`, et exactement les 9 permissions listées dans [docs/guide.md](docs/guide.md) (entier `292326304832`), vérifiées une par une sur un serveur de test. **Manage Threads en fait partie** : sans elle, le bot ne peut pas désarchiver les fils du forum, et un fil archivé n'accepte plus de réaction.
 
 > **Le point qui coince le plus souvent.** Dans *Paramètres du serveur >
 > Rôles*, le rôle du bot doit être **au-dessus** de tous les rôles qu'il gère.
