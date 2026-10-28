@@ -32,7 +32,13 @@ pub async fn on_update(
     {
         return Ok(());
     }
-    revive(ctx, thread.id, &thread.name).await
+    // Un fil qu'on ne peut pas rouvrir est signalé sans faire remonter l'erreur :
+    // l'événement concerne peut-être un fil hors de notre portée, et cela ne doit
+    // pas polluer les logs en ERROR ni interrompre le traitement des autres.
+    if let Err(err) = revive(ctx, thread.id, &thread.name).await {
+        tracing::warn!(fil = %thread.name, %err, "désarchivage impossible");
+    }
+    Ok(())
 }
 
 /// Rouvre au démarrage les fils archivés pendant que le bot était arrêté.
@@ -48,8 +54,12 @@ pub async fn revive_all(ctx: &serenity::Context, data: &Data) -> anyhow::Result<
         };
         if let Some(meta) = &channel.thread_metadata
             && should_revive(meta.archived, meta.locked)
+            && let Err(err) = revive(ctx, channel.id, &category.name).await
         {
-            revive(ctx, channel.id, &category.name).await?;
+            // Un fil qu'on ne peut pas rouvrir (salon restreint, entrée périmée…)
+            // ne doit pas empêcher de rouvrir tous les autres : on signale et on
+            // continue, au lieu d'abandonner la boucle au premier échec.
+            tracing::warn!(fil = %category.name, %err, "désarchivage impossible, on continue");
         }
     }
     Ok(())
