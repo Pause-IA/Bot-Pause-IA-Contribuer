@@ -106,7 +106,7 @@ l'image est **construite sur place**, et le `docker-compose.yml` la reprend via
 Installation initiale, dans `/opt/volunteer-apps/apps/` :
 
 ```bash
-git clone https://github.com/Romain-Deleglise/Bot-PauseIA-Animation---Integration-membres-Discord.git bot-roles
+git clone https://github.com/Pause-IA/Bot-Pause-IA-Contribuer.git bot-roles
 cd bot-roles
 
 cp .env.example .env
